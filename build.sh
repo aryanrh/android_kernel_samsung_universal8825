@@ -14,13 +14,11 @@ export LLVM=1 LLVM_IAS=1
 export ARCH=arm64
 
 clang(){
-  if [ ! -d /usr/bin/clang ]; then
     if [ ! -d $PARENT_DIR/clang-r416183b ]; then
       pause 'clone Android Clang/LLVM Prebuilts'
       git clone https://github.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r416183b $PARENT_DIR/clang-r416183b
       . $DIR/build.sh
     fi
-  fi;
 }
 
 gas(){
