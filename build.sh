@@ -74,7 +74,7 @@ anykernel3() {
 
 compile() {
   make $KERNEL_MAKE_ENV fgnor-a53x_defconfig
-  make $KERNEL_MAKE_ENV -j16
+  make $KERNEL_MAKE_ENV
 
   if [ -e arch/arm64/boot/Image ]; then
     mkdir $(pwd)/out
