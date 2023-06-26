@@ -34,7 +34,11 @@ gas(){
 build_tools(){
   if [ ! -d $PARENT_DIR/build-tools ]; then
     pause 'clone prebuilt binaries of build tools'
-    git clone https://android.googlesource.com/platform/prebuilts/build-tools $PARENT_DIR/build-tools
+    mkdir $PARENT_DIR/build-tools
+    wget https://android.googlesource.com/platform/prebuilts/build-tools/+archive/refs/heads/master.tar.gz -O $PARENT_DIR/master.tar.gz
+    tar xf $PARENT_DIR/master.tar.gz -C $PARENT_DIR/build-tools
+    rm -rf $DIR/master.tar*
+    rm -rf $PARENT_DIR/master.tar*
     . $DIR/build.sh
   fi
 }
