@@ -6,9 +6,9 @@ KERNEL_MAKE_ENV="LOCALVERSION=-fgnor"
 
 export PLATFORM_VERSION=12
 export ANDROID_MAJOR_VERSION=s
-export PATH=../clang-r416183b/bin/:$PATH
-export PATH=../build-tools/path/linux-x86:$PATH
-export PATH=../gas/linux-x86:$PATH
+export PATH=$PARENT_DIR/clang-r416183b/bin/:$PATH
+export PATH=$PARENT_DIR/build-tools/path/linux-x86:$PATH
+export PATH=$PARENT_DIR/gas/linux-x86:$PATH
 export TARGET_SOC=s5e8825
 export LLVM=1 LLVM_IAS=1
 export ARCH=arm64
@@ -18,7 +18,7 @@ clang(){
     if [ ! -d $PARENT_DIR/clang-r416183b ]; then
       pause 'clone Android Clang/LLVM Prebuilts'
       git clone https://github.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r416183b $PARENT_DIR/clang-r416183b
-      . $DIR/build_menu
+      . $DIR/build.sh
     fi
   fi;
 }
@@ -27,7 +27,7 @@ gas(){
   if [ ! -d $PARENT_DIR/gas/linux-x86 ]; then
     pause 'clone prebuilt binaries of GNU `as` (the assembler)'
     git clone https://android.googlesource.com/platform/prebuilts/gas/linux-x86 $PARENT_DIR/gas/linux-x86
-    . $DIR/build_menu
+    . $DIR/build.sh
   fi
 }
 
@@ -35,7 +35,7 @@ build_tools(){
   if [ ! -d $PARENT_DIR/build-tools ]; then
     pause 'clone prebuilt binaries of build tools'
     git clone https://android.googlesource.com/platform/prebuilts/build-tools $PARENT_DIR/build-tools
-    . $DIR/build_menu
+    . $DIR/build.sh
   fi
 }
 
@@ -73,8 +73,28 @@ anykernel3() {
 }
 
 compile() {
-  make $KERNEL_MAKE_ENV fgnor-a53x_defconfig
-  make $KERNEL_MAKE_ENV
+  single() {
+    make $KERNEL_MAKE_ENV fgnor-a53x_defconfig
+    make $KERNEL_MAKE_ENV
+  }
+
+  multi() {
+    make -j$(nproc) $KERNEL_MAKE_ENV fgnor-a53x_defconfig
+    make -j$(nproc) $KERNEL_MAKE_ENV
+  }
+
+  clear
+  echo "1. Single Core"
+  echo "2. Multi Core"
+  echo "3. Exit"
+
+  local CHOICE
+  read -p "Enter choice " CHOICE
+  case $CHOICE in
+    1) single ;;
+    2) multi ;;
+    3) . $DIR/build.sh ;;
+  esac
 
   if [ -e arch/arm64/boot/Image ]; then
     mkdir $(pwd)/out
