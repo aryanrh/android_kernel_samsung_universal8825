@@ -5,9 +5,9 @@ SUBLEVEL = 136
 EXTRAVERSION =
 NAME = Dare mighty things
 
-CROSS_COMPILE=../clang-r416183b/bin/aarch64-linux-gnu
-CC=../clang-r416183b/bin/clang
-CLANG_TRIPLE=../clang-r416183b/bin/aarch64-linux-gnu
+CROSS_COMPILE?=../clang-r416183b/bin/aarch64-linux-gnu
+CC?=../clang-r416183b/bin/clang
+CLANG_TRIPLE?=../clang-r416183b/bin/aarch64-linux-gnu
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
