@@ -9,6 +9,10 @@ CROSS_COMPILE?=../clang-r416183b/bin/aarch64-linux-gnu
 CC?=../clang-r416183b/bin/clang
 CLANG_TRIPLE?=../clang-r416183b/bin/aarch64-linux-gnu
 
+PLATFORM_VERSION ?= 12
+@echo "PLATFORM_VERSION: $(PLATFORM_VERSION)"
+export PLATFORM_VERSION
+
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README
