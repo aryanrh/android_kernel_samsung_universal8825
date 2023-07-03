@@ -75,18 +75,16 @@ DECLARE_STATIC_KEY_FALSE(kvm_protected_mode_initialized);
 /* Reports the availability of HYP mode */
 static inline bool is_hyp_mode_available(void)
 {
-    /*
-     * If KVM protected mode is initialized, all CPUs must have been booted
-     * in EL2. Avoid checking __boot_cpu_mode as CPUs now come up in EL1.
-     */
-    if (IS_ENABLED(CONFIG_KVM) &&
-        static_branch_likely(&kvm_protected_mode_initialized))
-        return true;
+	/*
+	 * If KVM protected mode is initialized, all CPUs must have been booted
+	 * in EL2. Avoid checking __boot_cpu_mode as CPUs now come up in EL1.
+	 */
+	if (IS_ENABLED(CONFIG_KVM) &&
+	    static_branch_likely(&kvm_protected_mode_initialized))
+		return true;
 
-    /*
-    return (__boot_cpu_mode[0] == BOOT_CPU_MODE_EL2 &&
-        __boot_cpu_mode[1] == BOOT_CPU_MODE_EL2);*/
-    return 1;
+	return (__boot_cpu_mode[0] == BOOT_CPU_MODE_EL2 &&
+		__boot_cpu_mode[1] == BOOT_CPU_MODE_EL2);
 }
 
 /* Check if the bootloader has booted CPUs in different modes */

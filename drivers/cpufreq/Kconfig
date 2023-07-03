@@ -132,17 +132,7 @@ config CPU_FREQ_DEFAULT_GOV_ENERGYAWARE
 	  have a look at the help section of that governor. The fallback
 	  governor will be 'performance'.
 
-config CPU_FREQ_DEFAULT_GOV_INTELLIDEMAND
-	bool "intellidemand"
-	select CPU_FREQ_GOV_INTELLIDEMAND
-	help
-	  Use the CPUFreq governor 'intellidemand' as default.
-
 endchoice
-
-config CPU_FREQ_GOV_INTELLIDEMAND
-    tristate "'intellidemand' cpufreq governor"
-    depends on CPU_FREQ
 
 config CPU_FREQ_GOV_PERFORMANCE
 	tristate "'performance' governor"
