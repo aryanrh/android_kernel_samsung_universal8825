@@ -16,3 +16,8 @@ jobs:
 
     - name: configure
       run: ./build.sh
+    - name: Upload artifact - arm64
+      uses: actions/upload-artifact@v2
+      with:
+      name: a53x_kernel_zImage
+      path: './arch/arm64/boot/Image'
